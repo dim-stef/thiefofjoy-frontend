@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Heading, Text } from "@chakra-ui/layout";
 import { Progress } from "@chakra-ui/react"
 import GratitudeNoteCreator from "../src/features/GratitudeNoteCreator";
-import SideBar from '../src/SideBar';
+import GratitudeJournal from '../src/features/GratitudeJournal';
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -27,13 +27,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         {/* <SideBar /> */}
         {/* <Progress value={10} w="100%" maxW="550px" mb={10} borderRadius={10}/> */}
-        <Heading as="h1" fontSize="6xl">Gratitude journal</Heading>
-        <Heading as="p" fontSize="3xl" maxW="550px" mb={10} textAlign="center" color="gray.700">
-          A gratitude journal is, quite simply, a tool to keep track of the good
-          things in life. No matter how difficult and defeating life can
-          sometimes feel, there is always something to feel grateful for.
-        </Heading>
-        <GratitudeNoteCreator setStep={setStep}/>
+        <GratitudeJournal />
       </main>
 
       {/* <footer className={styles.footer}></footer> */}

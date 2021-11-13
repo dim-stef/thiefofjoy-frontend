@@ -1,3 +1,6 @@
+import { NoteInterface } from "../GratitudeNote/interfaces";
+
 export interface GratitudeNoteCreatorProps{
-    setStep: Dispatch<SetStateAction<number>>
+    exampleNotes?: NoteInterface[]
+    //setStep: Dispatch<SetStateAction<number>>
 }

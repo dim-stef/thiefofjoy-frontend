@@ -11,3 +11,5 @@ export const progressSlice = createSlice({
     },
   },
 });
+
+export const {changeStep} = progressSlice.actions;
