@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 export const progressSlice = createSlice({
   name: "progress",
@@ -6,8 +7,8 @@ export const progressSlice = createSlice({
     step: 0,
   },
   reducers: {
-    changeStep(state, action) {
-      state.step = action;
+    changeStep(state, action: PayloadAction<number>) {
+      state.step = action.payload;
     },
   },
 });
