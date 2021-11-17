@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../src/store";
 import GratitudeJournal from "../src/features/GratitudeJournal";
 import StrengthJournal from "../src/features/StrengthJournal";
+import StepWrapper from "../src/flat/StepWrapper";
+import Cheer from "../src/features/Cheer";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -34,12 +37,53 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         {/* <SideBar /> */}
         {/* <Progress value={10} w="100%" maxW="550px" mb={10} borderRadius={10}/> */}
-        {step == 0 ? <GratitudeJournal/> : <StrengthJournal/>}
+        <PresenceWrapper isVisible={step == 0}>
+          <StepWrapper>
+            <GratitudeJournal />
+          </StepWrapper>
+        </PresenceWrapper>
+        <PresenceWrapper isVisible={step == 1}>
+          <StepWrapper>
+            <StrengthJournal />
+          </StepWrapper>
+        </PresenceWrapper>
+        <PresenceWrapper isVisible={step >= 2}>
+          <StepWrapper>
+            <Cheer />
+          </StepWrapper>
+        </PresenceWrapper>
+
+        {/* {step == 0 ? <GratitudeJournal/> : <StrengthJournal/>} */}
       </main>
 
       {/* <footer className={styles.footer}></footer> */}
     </div>
   );
 };
+
+type Props = {
+  isVisible: boolean;
+  children: JSX.Element;
+};
+
+function PresenceWrapper({ children, isVisible }: Props) {
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{
+            opacity: 0,
+            transform: "scale(0.9)",
+            position: "absolute",
+          }}
+          animate={{ opacity: 1, transform: "scale(1)" }}
+          exit={{ opacity: 0, transform: "scale(0.9)" }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 export default Home;

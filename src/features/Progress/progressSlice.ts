@@ -10,7 +10,13 @@ export const progressSlice = createSlice({
     changeStep(state, action: PayloadAction<number>) {
       state.step = action.payload;
     },
+    nextStep(state, action: PayloadAction){
+      state.step = state.step + 1
+    },
+    previousStep(state, action: PayloadAction){
+      state.step = Math.max(state.step - 1, 0)
+    }
   },
 });
 
-export const {changeStep} = progressSlice.actions;
+export const {changeStep, nextStep, previousStep} = progressSlice.actions;

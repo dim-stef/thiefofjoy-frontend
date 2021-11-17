@@ -79,7 +79,13 @@ function NoteCreator({
           <Input
             ref={(el) => (notesRef.current[i] = el)}
             variant="filled"
-            placeholder={note.placeholder}
+            placeholder={
+              note.placeholder
+                ? note.placeholder
+                : exampleNotes
+                ? exampleNotes[Math.floor(Math.random() * exampleNotes.length)].placeholder
+                : ''
+            }
             value={note.body}
             onKeyDown={handleKeyDown}
             onChange={(e) => onTextChange(e, note.id)}
@@ -119,7 +125,7 @@ function NoteCreator({
         size="lg"
         icon={<AddIcon />}
       /> */}
-      <ButtonGroup
+      {/* <ButtonGroup
         pt="50px"
         justifyContent="center"
         variant="outline"
@@ -130,7 +136,7 @@ function NoteCreator({
         <Button colorScheme="teal" variant="solid" onClick={handleNextClick}>
           Done
         </Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </VStack>
   );
 }
