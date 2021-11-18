@@ -8,6 +8,7 @@ import { RootState } from "../src/store";
 import GratitudeJournal from "../src/features/GratitudeJournal";
 import StrengthJournal from "../src/features/StrengthJournal";
 import StepWrapper from "../src/flat/StepWrapper";
+import RandomQuoteList from "../src/features/RandomQuoteList";
 import Cheer from "../src/features/Cheer";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "../styles/Home.module.css";
@@ -47,7 +48,12 @@ const Home: NextPage = () => {
             <StrengthJournal />
           </StepWrapper>
         </PresenceWrapper>
-        <PresenceWrapper isVisible={step >= 2}>
+        <PresenceWrapper isVisible={step == 2}>
+          <StepWrapper>
+            <RandomQuoteList />
+          </StepWrapper>
+        </PresenceWrapper>
+        <PresenceWrapper isVisible={step >= 3}>
           <StepWrapper>
             <Cheer />
           </StepWrapper>
