@@ -10,6 +10,7 @@ import StrengthJournal from "../src/features/StrengthJournal";
 import StepWrapper from "../src/flat/StepWrapper";
 import RandomQuoteList from "../src/features/RandomQuoteList";
 import Cheer from "../src/features/Cheer";
+import ViewJournal from "../src/features/ViewJournal";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "../styles/Home.module.css";
 
@@ -53,11 +54,17 @@ const Home: NextPage = () => {
             <RandomQuoteList />
           </StepWrapper>
         </PresenceWrapper>
-        <PresenceWrapper isVisible={step >= 3}>
+        <PresenceWrapper isVisible={step == 3}>
           <StepWrapper>
             <Cheer />
           </StepWrapper>
         </PresenceWrapper>
+        <PresenceWrapper isVisible={step >= 4}>
+          <StepWrapper final>
+            <ViewJournal />
+          </StepWrapper>
+        </PresenceWrapper>
+
 
         {/* {step == 0 ? <GratitudeJournal/> : <StrengthJournal/>} */}
       </main>
@@ -77,6 +84,7 @@ function PresenceWrapper({ children, isVisible }: Props) {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          style={{height: '100%'}}
           initial={{
             opacity: 0,
             transform: "scale(0.9)",
