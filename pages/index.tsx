@@ -11,6 +11,7 @@ import StepWrapper from "../src/flat/StepWrapper";
 import RandomQuoteList from "../src/features/RandomQuoteList";
 import Cheer from "../src/features/Cheer";
 import ViewJournal from "../src/features/ViewJournal";
+import Journal from "../src/features/Journal";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "../styles/Home.module.css";
 
@@ -59,16 +60,19 @@ const Home: NextPage = () => {
             <Cheer />
           </StepWrapper>
         </PresenceWrapper>
-        <PresenceWrapper isVisible={step >= 4}>
+        <PresenceWrapper isVisible={step == 4}>
           <StepWrapper final>
             <ViewJournal />
           </StepWrapper>
         </PresenceWrapper>
-
+        <PresenceWrapper isVisible={step >= 5}>
+          <StepWrapper final noBack>
+            <Journal />
+          </StepWrapper>
+        </PresenceWrapper>
 
         {/* {step == 0 ? <GratitudeJournal/> : <StrengthJournal/>} */}
       </main>
-
       {/* <footer className={styles.footer}></footer> */}
     </div>
   );

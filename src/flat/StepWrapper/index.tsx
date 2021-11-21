@@ -7,7 +7,7 @@ import { RootState } from "../../store";
 import { StepWrapperProps } from "./interface";
 import { nextStep, previousStep } from "../../features/Progress/progressSlice";
 
-function StepWrapper({ children, final }: StepWrapperProps) {
+function StepWrapper({ children, final, noBack = false }: StepWrapperProps) {
   const { step } = useSelector((state: RootState) => state.progress);
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ function StepWrapper({ children, final }: StepWrapperProps) {
       height="100%"
     >
       <Flex justifyContent="space-between" w="100%" mb={10}>
-        {step != 0 && (
+        {step != 0 && !noBack && (
           <IconButton
             onClick={handlePreviousClick}
             aria-label="Back"
@@ -39,7 +39,7 @@ function StepWrapper({ children, final }: StepWrapperProps) {
         )}
         <Box flex="1"></Box>
 
-        <Button onClick={handleNextClick}>Skip</Button>
+        {!noBack && <Button onClick={handleNextClick}>Skip</Button>}
       </Flex>
       {children}
       {!final && (
