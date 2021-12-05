@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NoteInterface } from "../../features/GratitudeNote/interfaces";
 import { NoteCreatorProps } from "./interface";
 import { changeStep } from "../../features/Progress/progressSlice";
+import uuidv4 from "../../utils/uuid";
 
 function NoteCreator({
   addNewButtonText,
@@ -30,22 +31,25 @@ function NoteCreator({
       ? exampleNotes
       : [
           {
-            id: 0,
+            id: uuidv4(),
             body: "",
           },
         ]
   );
 
-  function onTextChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
+  function onTextChange(e: React.ChangeEvent<HTMLInputElement>, id: string) {
     let new_notes = [...notes];
-    new_notes[id].body = e.currentTarget.value;
+    const foundNote = new_notes.find(note=>note.id==id);
+    if(foundNote){
+      foundNote.body = e.currentTarget.value;
+    }
     setNotes(new_notes);
   }
 
   function onNewNoteClick() {
     let new_notes = [...notes];
     new_notes.push({
-      id: new_notes.length,
+      id: uuidv4(),
       body: "",
     });
     setNotes(new_notes);
@@ -53,11 +57,17 @@ function NoteCreator({
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key == "Enter") {
-      onNewNoteClick();
+      let emptyNoteIndex = notes.findIndex((note)=>note.body=='' || !note.body)
+      if(emptyNoteIndex==-1){
+        onNewNoteClick();
+      }else{
+        notesRef.current[emptyNoteIndex]?.focus();
+      }
     }
   }
 
-  function handleRemoveNote(index: number) {
+  function handleRemoveNote(id: string) {
+    let index = notes.findIndex((note)=>note.id == id)
     let new_notes = [...notes];
     new_notes.splice(index, 1);
     setNotes(new_notes);
@@ -69,7 +79,14 @@ function NoteCreator({
   }
 
   useEffect(() => {
-    notesRef.current[notesRef.current.length - 1]?.focus();
+    // first check if there are empty inputs and attempt to focus on these
+    // this can be the case on the initial load where there are 3 empty inputs
+    let emptyNoteIndex = notes.findIndex((note)=>note.body=='' || !note.body)
+    if(emptyNoteIndex!=-1){
+      notesRef.current[emptyNoteIndex]?.focus();
+    }else{
+      notesRef.current[notesRef.current.length - 1]?.focus();
+    }
   }, [notes.length]);
 
   return (
@@ -92,7 +109,7 @@ function NoteCreator({
           />
           {notes.length > 1 && (
             <InputRightElement>
-              <CloseButton onClick={() => handleRemoveNote(i)} />
+              <CloseButton onClick={() => handleRemoveNote(note.id)} />
             </InputRightElement>
           )}
         </InputGroup>
