@@ -9,8 +9,11 @@ import {
 } from "@chakra-ui/layout";
 import journal_data from "./data/journal_data.json";
 import { JournalItemProps } from "./interface";
+import useGetGratitudeNotes from "./api/useGetGratitudeNotes";
 
 function Journal() {
+  const gratitudeNotes = useGetGratitudeNotes();
+  
   return (
     <VStack w="100%" spacing={10} align="stretch">
       <Flex flexFlow="column">
@@ -28,7 +31,7 @@ function Journal() {
               </Heading>
               <Heading as="h2" mt={5} color="#585858">🙏 Gratitudes</Heading>
               <List>
-                {data.gratitudes.map((gratitude, i) => (
+                {gratitudeNotes.data?.map((gratitude, i) => (
                   <JournalItem key={i} body={gratitude.body}/>
                   ))}
               </List>
