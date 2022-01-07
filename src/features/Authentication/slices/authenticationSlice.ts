@@ -20,8 +20,8 @@ export const login = createAsyncThunk(
       axios.interceptors.request.use(
         function (config) {
           // Do something before request is sent
-          if (config.headers && response.data.token) {
-            config.headers.authorization = `JWT ${response.data.token}`;
+          if (config.headers && response.data.access) {
+            config.headers.authorization = `Bearer ${response.data.access}`;
           }
           return config;
         },
@@ -35,10 +35,10 @@ export const login = createAsyncThunk(
       return null;
     }
 
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
+    if (response.data.access) {
+      localStorage.setItem("token", response.data.access);
     }
-    return response.data.token;
+    return response.data.access;
   }
 );
 
@@ -55,7 +55,7 @@ export const authenticationSlice = createSlice({
         function (config) {
           // Do something before request is sent
           if (config.headers && token) {
-            config.headers.authorization = `JWT ${token}`;
+            config.headers.authorization = `Bearer ${token}`;
           }
           return config;
         },
